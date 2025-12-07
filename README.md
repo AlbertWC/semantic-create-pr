@@ -91,7 +91,7 @@ qpr -t "Fix bug" -b "This fixes issue #123"
 | `-f, --fill` | Use git commits (skip AI) |
 | `-V, --version` | Show version |
 | `-h, --help` | Show help |
-
+ 
 ## Examples
 
 ```bash

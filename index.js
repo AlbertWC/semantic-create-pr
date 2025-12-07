@@ -132,13 +132,14 @@ program
   .version('1.0.0');
 
 program
+  .argument('<message>', 'Commit message (used as PR title)')
   .argument('[base-branch]', 'Base branch to create PR against')
   .option('-d, --draft', 'Create as draft PR')
   .option('-t, --title <title>', 'PR title')
   .option('-b, --body <body>', 'PR description (overrides Copilot summary)')
   .option('--no-copilot', 'Disable Copilot summary generation')
   .option('-f, --fill', 'Use git commits to fill (skip Copilot)')
-  .action((baseBranch, options) => {
+  .action((message, baseBranchArg, options) => {
     // Get current branch
     const currentBranch = getCurrentBranch();
     if (!currentBranch) {
@@ -146,10 +147,23 @@ program
       process.exit(1);
     }
 
+    // Commit changes
+    try {
+      console.log(chalk.blue(`💾 Committing changes...`));
+      execSync(`git commit -am "${message.replace(/"/g, '\\"')}"`, { stdio: 'inherit' });
+    } catch (error) {
+      console.log(chalk.yellow('⚠️  No changes to commit or commit failed. Continuing...'));
+    }
+
+    // Set title default
+    if (!options.title) {
+      options.title = message;
+    }
+
     console.log(chalk.cyan(`📍 Current branch: ${currentBranch}`));
 
     // Determine base branch
-    const base = baseBranch || getDefaultBranch();
+    const base = baseBranchArg || getDefaultBranch();
     if (!base) {
       console.error(chalk.red('❌ Could not find main or master branch'));
       process.exit(1);
