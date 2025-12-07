@@ -1,0 +1,37 @@
+{
+  "name": "semantic-create-pr",
+  "version": "1.0.0",
+  "description": "Quickly create GitHub PRs from your current branch with AI-powered descriptions",
+  "keywords": [
+    "git",
+    "github",
+    "pr",
+    "pull-request",
+    "cli",
+    "copilot",
+    "ai"
+  ],
+  "homepage": "https://github.com/AlbertWC/semantic-create-pr#readme",
+  "bugs": {
+    "url": "https://github.com/AlbertWC/semantic-create-pr/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlbertWC/semantic-create-pr.git"
+  },
+  "license": "MIT",
+  "author": "AlbertWC",
+  "type": "module",
+  "main": "index.js",
+  "bin": {
+    "qpr": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "commander": "^14.0.2",
+    "ora": "^9.0.0"
+  }
+}
