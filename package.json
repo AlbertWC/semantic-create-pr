@@ -26,12 +26,18 @@
   "bin": {
     "qpr": "./index.js"
   },
+  "exports": "./index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "dev": "node index.js"
   },
   "dependencies": {
     "chalk": "^5.6.2",
     "commander": "^14.0.2",
     "ora": "^9.0.0"
+  },
+  "devDependencies": {
+    "vitest": "^4.0.15"
   }
 }
