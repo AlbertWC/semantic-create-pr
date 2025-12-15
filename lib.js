@@ -22,15 +22,27 @@ export function getCurrentBranch() {
 }
 
 export function getDefaultBranch() {
+  // Try to get the default branch from remote HEAD
+  const remoteHead = exec('git symbolic-ref refs/remotes/origin/HEAD', true);
+  if (remoteHead) {
+    const match = remoteHead.match(/refs\/remotes\/origin\/(.+)/);
+    if (match) return match[1];
+  }
+  
+  // Try to get default branch from remote show origin
+  const remoteInfo = exec('git remote show origin', true);
+  if (remoteInfo) {
+    const match = remoteInfo.match(/HEAD branch:\s*(.+)/);
+    if (match) return match[1].trim();
+  }
+  
+  // Fallback: check common default branches locally
   if (exec('git show-ref --verify refs/heads/main', true)) return 'main';
   if (exec('git show-ref --verify refs/heads/master', true)) return 'master';
   
+  // Check remote refs
   if (exec('git show-ref --verify refs/remotes/origin/main', true)) return 'main';
   if (exec('git show-ref --verify refs/remotes/origin/master', true)) return 'master';
-  
-  // Check configured branches
-  if (exec('git config --get branch.main.merge', true)) return 'main';
-  if (exec('git config --get branch.master.merge', true)) return 'master';
   
   return null;
 }
