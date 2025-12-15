@@ -36,13 +36,6 @@ export function getDefaultBranch() {
     if (match) return match[1].trim();
   }
   
-  // Fallback: check common default branches locally
-  if (exec('git show-ref --verify refs/heads/main', true)) return 'main';
-  if (exec('git show-ref --verify refs/heads/master', true)) return 'master';
-  
-  // Check remote refs
-  if (exec('git show-ref --verify refs/remotes/origin/main', true)) return 'main';
-  if (exec('git show-ref --verify refs/remotes/origin/master', true)) return 'master';
   
   return null;
 }
@@ -158,7 +151,6 @@ Please provide the response in this format:
       
       spinner.succeed('✅ PR description generated with Copilot analysis');
       console.log('\n' + chalk.dim('─'.repeat(60)));
-      console.log(description);
       console.log(chalk.dim('─'.repeat(60)) + '\n');
       
       return description;
@@ -170,7 +162,6 @@ Please provide the response in this format:
     const description = buildPRDescription(commits, fileStats, diffOutput, severity);
     
     console.log('\n' + chalk.dim('─'.repeat(60)));
-    console.log(description);
     console.log(chalk.dim('─'.repeat(60)) + '\n');
     
     return description;

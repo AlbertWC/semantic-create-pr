@@ -1,6 +1,6 @@
 {
   "name": "qpr-semantic-create-pr",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Quickly create GitHub PRs from your current branch with AI-powered descriptions",
   "keywords": [
     "git",
