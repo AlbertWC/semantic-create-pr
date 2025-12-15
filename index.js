@@ -2,6 +2,9 @@
 import { execSync } from 'child_process';
 import { program } from 'commander';
 import chalk from 'chalk';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import { 
   getCurrentBranch, 
   getDefaultBranch, 
@@ -12,10 +15,15 @@ import {
   forceCommitAndPush
 } from './lib.js';
 
+// Get version from package.json
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const packageJson = JSON.parse(readFileSync(join(__dirname, 'package.json'), 'utf8'));
+
 program
   .name('qpr')
-  .description('Quickly create GitHub PRs with AI-powered descriptions')
-  .version('1.0.0')
+  .description(`Quickly create GitHub PRs with AI-powered descriptions (v${packageJson.version})`)
+  .version(packageJson.version)
   .showHelpAfterError('(add --help for additional information)')
   .addHelpText('after', `
 Examples:
